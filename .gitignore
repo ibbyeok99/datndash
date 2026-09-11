@@ -1,0 +1,16 @@
+# 1. 비밀번호 및 DB 접속 개인 설정 (보안 필수)
+.env
+
+# 2. 대용량 데이터 파일 (깃허브 용량 초과 방지)
+*.csv
+*.xlsx
+data/raw/
+
+# 3. 파이썬 임시 파일 및 가상환경
+__pycache__/
+.venv/
+venv/
+
+# 4. OS 임시 파일
+.DS_Store
+Thumbs.db
