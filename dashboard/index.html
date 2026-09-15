@@ -1,0 +1,96 @@
+<title>국방조달 위험 스크리닝</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="style.css">
+
+<div class="app-shell">
+  <header class="topbar">
+    <div class="topbar-inner side-gutter">
+      <div class="brand">
+        <h1>국방조달 절차 위험 스크리닝</h1>
+        <span class="subtitle">품목별 계약성립 소요일수 · 경쟁구조 · 업체집중도 대시보드</span>
+      </div>
+      <button id="theme-toggle-btn" class="theme-toggle" type="button">🌗 테마</button>
+    </div>
+  </header>
+
+  <div class="filter-bar side-gutter">
+    <span class="filter-label">품목분류</span>
+    <div id="filter-chip-container" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
+    <button id="chip-reset-btn" class="chip-reset" type="button">전체 선택</button>
+    <span id="filter-count" class="kpi-help" style="margin-left:auto"></span>
+  </div>
+
+  <main class="side-gutter" style="flex:1">
+    <nav class="tab-nav">
+      <button class="tab-btn" data-tab="overview" type="button">📊 전체 현황</button>
+      <button class="tab-btn" data-tab="leadtime" type="button">⏱️ 소요일수 · 추이</button>
+      <button class="tab-btn" data-tab="bidding" type="button">🎯 입찰경쟁</button>
+      <button class="tab-btn" data-tab="concentration" type="button">🏭 업체집중도</button>
+      <button class="tab-btn" data-tab="detail" type="button">🔍 품목 상세</button>
+      <button class="tab-btn" data-tab="stats" type="button">📐 통계적 근거</button>
+    </nav>
+
+    <section id="panel-overview" class="tab-panel">
+      <p class="section-intro">선택한 품목분류 범위의 전체 조달 규모와 표본 현황을 요약합니다. 서로 다른 출처(D2B·G2B)의 표본수는 합산하지 않으며, 품목별 비율·중앙값을 단순평균한 "전체 지표"도 제공하지 않습니다.</p>
+      <div id="overview-body"></div>
+    </section>
+
+    <section id="panel-leadtime" class="tab-panel">
+      <p class="section-intro">공고부터 계약체결까지 걸린 절차 소요일수를 품목별로 비교합니다. 중앙값은 일반적인 소요일수를, P90은 상위 10%의 장기 소요 가능성을 보여줍니다.</p>
+      <div class="card"><div class="card-strip"></div><div id="leadtime-item-body"></div></div>
+      <div class="card" style="margin-top:18px"><div class="card-strip"></div>
+        <h2>월별 추이</h2>
+        <div id="leadtime-trend-body"></div>
+      </div>
+    </section>
+
+    <section id="panel-bidding" class="tab-panel">
+      <p class="section-intro">단독입찰과 유찰이 반복되는 품목을 찾습니다. 단독입찰 자체를 부정행위나 계약 실패로 해석하지 않습니다.</p>
+      <div class="card"><div class="card-strip"></div><div id="bidding-body"></div></div>
+    </section>
+
+    <section id="panel-concentration" class="tab-panel">
+      <p class="section-intro">특정 업체에 계약이 집중된 품목을 확인합니다. 표본부족 품목군의 높은 HHI는 확정적 결론이 아니라 참고값입니다.</p>
+      <div class="card"><div class="card-strip"></div><div id="concentration-body"></div></div>
+    </section>
+
+    <section id="panel-detail" class="tab-panel">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap">
+        <label for="detail-select" class="filter-label">품목 선택</label>
+        <select id="detail-select" class="select-item"></select>
+      </div>
+      <div id="detail-summary"></div>
+      <div id="detail-risk" style="margin-top:18px"></div>
+      <div id="detail-vendors" style="margin-top:18px"></div>
+      <div class="card" style="margin-top:18px">
+        <div class="card-strip"></div>
+        <h2>조달건별 상세내역</h2>
+        <p class="section-intro">선택한 품목의 개별 공고·계약 이력입니다.</p>
+        <div id="detail-cases"></div>
+      </div>
+    </section>
+
+    <section id="panel-stats" class="tab-panel">
+      <div id="stats-body"></div>
+    </section>
+
+    <details class="caveats" style="margin-top:32px">
+      <summary>데이터 해석 시 유의사항</summary>
+      <ol>
+        <li>본 분석은 실제 납품 지연을 측정하지 않습니다. 공고일부터 계약체결일까지의 조달절차 소요일수와 경쟁 제한·반복입찰·업체집중의 위험징후를 보여줍니다.</li>
+        <li>D2B와 G2B는 서로 다른 자료이며, 품목분류 수준으로 집계된 지표를 나란히 배치한 것입니다 — 동일 조달 건을 조인한 값이 아닙니다.</li>
+        <li>G2B 자료는 나라장터 국방기관 표본이며, 국방조달 전체 또는 대형 무기체계 계약 전체를 대표하지 않습니다.</li>
+        <li>품목분류는 공고명·계약명의 키워드 규칙을 사용한 결과이며, 규칙이 보완되면 품목별 건수와 지표가 변경될 수 있습니다.</li>
+        <li>통계적으로 유의한 관계가 확인되어도 인과관계로 해석하지 않습니다.</li>
+        <li>조달절차 위험점수와 위험등급은 산식이 확정된 데이터가 도착한 이후에만 표시됩니다. 현재 비어 있는 항목은 임의로 계산하지 않습니다.</li>
+      </ol>
+    </details>
+  </main>
+
+  <footer class="app-footer">국방·첨단산업 AI 솔루션 머신러닝 엔지니어 양성과정 1차 프로젝트 · 데이터 출처: 방위사업청 국내조달(D2B), 나라장터(G2B)</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.2/plotly.min.js"></script>
+<script src="app.js"></script>
