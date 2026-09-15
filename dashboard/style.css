@@ -151,20 +151,21 @@ a { color: var(--accent); }
 }
 
 .topbar::before {
-  /* 저채도 카모 블롭 패턴 — 낮은 투명도로 텍스트 판독성 유지 */
+  /* 또렷한 카모 블롭 패턴 — 작은 타일로 반복해 얇은 헤더 안에서도 보이게 함 */
   content: "";
   position: absolute;
   inset: 0;
-  opacity: 0.28;
+  opacity: 0.55;
   pointer-events: none;
   background-image:
-    radial-gradient(ellipse 220px 140px at 6% 30%, var(--camo-olive) 40%, transparent 72%),
-    radial-gradient(ellipse 260px 170px at 46% 80%, var(--camo-khaki) 35%, transparent 70%),
-    radial-gradient(ellipse 180px 220px at 78% 15%, var(--camo-slate) 32%, transparent 68%),
-    radial-gradient(ellipse 210px 150px at 95% 70%, var(--camo-olive) 36%, transparent 70%),
-    radial-gradient(ellipse 150px 190px at 28% 5%, var(--camo-slate) 30%, transparent 65%);
+    radial-gradient(circle at 12% 30%, var(--camo-olive) 0 22px, transparent 23px),
+    radial-gradient(circle at 42% 70%, var(--camo-khaki) 0 27px, transparent 28px),
+    radial-gradient(circle at 68% 18%, var(--camo-slate) 0 20px, transparent 21px),
+    radial-gradient(circle at 88% 62%, var(--camo-olive) 0 18px, transparent 19px),
+    radial-gradient(circle at 26% 92%, var(--camo-khaki) 0 16px, transparent 17px),
+    radial-gradient(circle at 58% 42%, var(--camo-slate) 0 14px, transparent 15px);
   background-repeat: repeat;
-  background-size: 560px 480px;
+  background-size: 150px 110px;
 }
 
 .topbar-inner {

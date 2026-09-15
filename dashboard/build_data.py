@@ -54,9 +54,56 @@ def load_new_dataset(key: str, filename: str) -> dict:
     """신규 dashboard_*.csv 하나를 읽는다. 없으면 available=False로 빈 프레임 반환."""
     path = NEW_DIR / filename
     if not path.exists():
-        return {"available": False, "sourceFile": filename, "rows": []}
+        return {"available": False, "bridged": False, "sourceFile": filename, "rows": []}
     df = pd.read_csv(path, encoding="utf-8-sig")
-    return {"available": True, "sourceFile": filename, "rows": df_to_records(df)}
+    return {"available": True, "bridged": False, "sourceFile": filename, "rows": df_to_records(df)}
+
+
+def bridge_item_risk_from_legacy(df_07: pd.DataFrame) -> dict:
+    """dashboard_품목별_위험현황.csv 가 아직 없을 때, 실제 값이 존재하는 지표에 한해
+    레거시 07 통합지표에서 같은 의미의 컬럼만 옮겨온다.
+
+    위험점수 구성요소(리드타임점수/유찰점수/단독입찰점수/HHI점수/종합위험점수/위험등급)는
+    레거시 데이터에 대응 항목이 전혀 없으므로 null로 남긴다 — 절대 임의 계산하지 않는다.
+    유효공고건수/계약성립건수/분석가능건수/계약금액합계는 정의가 정확히 같지 않은
+    근사 매핑이라 "bridged": true 로 표시해 프런트에서 안내 배너를 띄운다.
+    """
+    rows = []
+    for row in df_to_records(df_07):
+        insufficient = "Y" if "Y" in (
+            row.get("D2B_표본부족여부"),
+            row.get("G2B_입찰표본부족여부"),
+            row.get("G2B_HHI표본부족여부"),
+        ) else "N"
+        rows.append({
+            "품목분류": row.get("품목분류"),
+            "유효공고건수": row.get("G2B_공고품목수"),
+            "계약성립건수": row.get("G2B_계약수"),
+            "분석가능건수": row.get("D2B_분석표본수"),
+            "중앙_계약성립소요일수": row.get("중앙_계약성립소요일수"),
+            "평균_계약성립소요일수": row.get("평균_계약성립소요일수"),
+            "p90_계약성립소요일수": row.get("P90_계약성립소요일수"),
+            "유찰률": row.get("유찰률"),
+            "단독입찰률": row.get("단독입찰률"),
+            "재공고율": row.get("재공고율"),
+            "계약금액합계": row.get("G2B_계약금액"),
+            "상위1개사_계약금액점유율": row.get("상위1개사_계약금액비중"),
+            "상위3개사_계약금액점유율": row.get("상위3개사_계약금액비중"),
+            "HHI": row.get("HHI"),
+            "리드타임점수": None,
+            "유찰점수": None,
+            "단독입찰점수": None,
+            "HHI점수": None,
+            "종합위험점수": None,
+            "위험등급": None,
+            "표본부족여부": insufficient,
+        })
+    return {
+        "available": True,
+        "bridged": True,
+        "sourceFile": "07_품목별_조달절차_경쟁구조_통합지표.csv (레거시 임시 매핑)",
+        "rows": rows,
+    }
 
 
 def read_legacy_csv(filename: str) -> pd.DataFrame | None:
@@ -70,7 +117,14 @@ def main():
     # ---- 신규 운영 데이터셋 (4종, 아직 미도착 가능) --------------------------------
     new_datasets = {key: load_new_dataset(key, fname) for key, fname in NEW_DATASET_FILES.items()}
 
-    # itemRisk가 도착했다면 값 범위를 검증(있는 컬럼에 한해서만)
+    # itemRisk 파일이 아직 없으면, 실제 값이 있는 레거시 07 통합지표로 임시 연결한다
+    # (월별추이·조달건별상세·업체집중도는 레거시에 대응 데이터가 전혀 없어 브릿지하지 않음)
+    if not new_datasets["itemRisk"]["available"]:
+        df_07_for_bridge = read_legacy_csv("07_품목별_조달절차_경쟁구조_통합지표.csv")
+        if df_07_for_bridge is not None:
+            new_datasets["itemRisk"] = bridge_item_risk_from_legacy(df_07_for_bridge)
+
+    # itemRisk가 도착했다면(또는 브릿지되었다면) 값 범위를 검증(있는 컬럼에 한해서만)
     if new_datasets["itemRisk"]["available"]:
         rows = new_datasets["itemRisk"]["rows"]
         for row in rows:

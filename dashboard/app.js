@@ -59,6 +59,10 @@ function yesNoBadgeHTML(v) {
 /* ------------------------------------------------------------------------
    빈 상태(데이터 없음) 공용 컴포넌트
    ------------------------------------------------------------------------ */
+function bridgedBannerHTML() {
+  if (!DATA.itemRisk.bridged) return "";
+  return `<div class="banner">🔧 <div><strong>임시 연결:</strong> <code>dashboard_품목별_위험현황.csv</code>가 아직 도착하지 않아 레거시 EDA 통합지표(<code>07_품목별_조달절차_경쟁구조_통합지표.csv</code>)의 실제 값을 임시로 보여주고 있습니다. 유효공고건수·계약성립건수·분석가능건수·계약금액합계는 근사 매핑이며, 위험점수/위험등급은 계산하지 않고 데이터 없음으로 유지합니다. 신규 파일이 도착하면 자동으로 대체됩니다.</div></div>`;
+}
 function emptyStateHTML(desc, filename) {
   return `
     <div class="empty-state">
@@ -224,6 +228,7 @@ function renderOverview() {
   const insufficient = rows.filter((r) => r.표본부족여부 === "Y").length;
 
   wrap.innerHTML = `
+    ${bridgedBannerHTML()}
     <div class="grid grid-kpi" id="overview-kpis"></div>
     <div class="card" style="margin-top:18px">
       <h2>품목별 계약성립건수</h2>
@@ -260,6 +265,7 @@ function renderLeadTime() {
   } else {
     const rows = itemRiskRows();
     wrapA.innerHTML = `
+      ${bridgedBannerHTML()}
       <div class="grid grid-2">
         <div><h3>중앙 계약성립소요일수</h3><div id="chart-leadtime-median"></div></div>
         <div><h3>P90 계약성립소요일수</h3><div id="chart-leadtime-p90"></div></div>
@@ -331,6 +337,7 @@ function renderBidding() {
   }
   const rows = itemRiskRows();
   wrap.innerHTML = `
+    ${bridgedBannerHTML()}
     <p class="section-intro">새 데이터셋에는 반복입찰률·낙찰성공률·참가업체수 필드가 없어 이번 프레임에서는 단독입찰률·유찰률만 제공합니다. 해당 필드가 추가되면 이 화면에 지표를 더 연결할 수 있습니다.</p>
     <div class="grid grid-2">
       <div><h3>단독입찰률</h3><div id="chart-bidding-solo"></div></div>
@@ -369,6 +376,7 @@ function renderConcentration() {
   }
   const rows = itemRiskRows();
   wrap.innerHTML = `
+    ${bridgedBannerHTML()}
     <h3>HHI</h3><div id="chart-hhi-bar"></div>
     <h3 style="margin-top:22px">상위1개사 vs 상위3개사 점유율</h3><div id="chart-share-compare"></div>
     <h3 style="margin-top:22px">HHI × 상위1개사 점유율</h3><div id="chart-hhi-scatter"></div>`;
@@ -425,6 +433,7 @@ function renderDetail(item) {
     summaryEl.innerHTML = emptyStateHTML(`"${target}" 품목의 위험현황 데이터가 아직 없습니다.`, "dashboard_품목별_위험현황.csv");
   } else {
     summaryEl.innerHTML = `
+      ${bridgedBannerHTML()}
       <div class="detail-flags">${flagBadgeHTML(r.표본부족여부)} ${gradeBadgeHTML(r.위험등급)}</div>
       <div class="grid grid-2" style="margin-top:14px">
         <div class="card"><h3>조달 규모</h3><ul class="detail-list">
