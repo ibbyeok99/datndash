@@ -143,6 +143,13 @@ def main():
     df_07 = read_legacy_csv("07_품목별_조달절차_경쟁구조_통합지표.csv")
     df_08 = read_legacy_csv("08_품목분류_품질요약.csv")
 
+    # 가설1: 단독입찰 여부 × 재절차(유찰·재시담·재입찰) 발생 관계 (신규 추가된 레거시 EDA 파일)
+    df_h1_test = read_legacy_csv("가설1_검정결과.csv")
+    df_h1_crosstab = read_legacy_csv("가설1_교차표.csv")
+    df_h1_sensitivity = read_legacy_csv("가설1_민감도분석.csv")
+    df_h1_status = read_legacy_csv("가설1_상태별_기술통계.csv")
+    df_h1_rate = read_legacy_csv("가설1_입찰형태별_재절차발생률.csv")
+
     legacy_available = df_07 is not None
 
     # 품목분류 taxonomy: 신규 itemRisk가 있으면 그쪽을, 없으면 레거시 07에서 derive.
@@ -160,6 +167,12 @@ def main():
         "d2bOverallTest": df_to_records(df_02)[0] if df_02 is not None else None,
         "d2bPosthoc": df_to_records(df_03) if df_03 is not None else [],
         "g2bChi2": df_to_records(df_05)[0] if df_05 is not None else None,
+        "h1Available": df_h1_test is not None,
+        "h1Test": df_to_records(df_h1_test)[0] if df_h1_test is not None else None,
+        "h1CrossTab": df_to_records(df_h1_crosstab) if df_h1_crosstab is not None else [],
+        "h1Sensitivity": df_to_records(df_h1_sensitivity) if df_h1_sensitivity is not None else [],
+        "h1StatusBreakdown": df_to_records(df_h1_status) if df_h1_status is not None else [],
+        "h1RateByType": df_to_records(df_h1_rate) if df_h1_rate is not None else [],
     }
     quality_summary = df_to_records(df_08) if df_08 is not None else []
 

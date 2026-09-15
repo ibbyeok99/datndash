@@ -538,6 +538,13 @@ function kwInterpretation(t) {
   return "품목분류별 계약성립 소요일수에는 통계적으로 유의한 차이가 나타났으며, 효과크기도 상당히 큰 편입니다.";
 }
 
+function h1Interpretation(t) {
+  const sig = t.귀무가설기각여부 === true;
+  if (!sig) return "단독입찰 여부와 재절차(유찰·재시담·재입찰) 발생 사이에 통계적으로 유의한 관련성이 확인되지 않았습니다.";
+  const or = t.오즈비_단독대다수;
+  return `단독입찰인 경우 재절차(유찰·재시담·재입찰) 발생 오즈비가 다수입찰 대비 ${or.toFixed(2)}배 높았습니다(95% CI ${t.오즈비_신뢰구간하한.toFixed(2)}~${t.오즈비_신뢰구간상한.toFixed(2)}, p<0.001). 정의를 바꾼 민감도 분석에서도 일관되게 유의했습니다. 이는 인과관계가 아닌 통계적 연관성이며, D2B 공고-계약 매칭자료 기준입니다.`;
+}
+
 function renderStats() {
   const wrap = document.getElementById("stats-body");
   if (!DATA.stats.available) {
@@ -546,6 +553,7 @@ function renderStats() {
   }
   const t02 = DATA.stats.d2bOverallTest;
   const t05 = DATA.stats.g2bChi2;
+  const t_h1 = DATA.stats.h1Test;
   const posthocSig = DATA.stats.d2bPosthoc.filter((r) => r.유의함 === true);
 
   wrap.innerHTML = `
@@ -573,7 +581,25 @@ function renderStats() {
       <h3>품목 쌍별 사후검정</h3>
       <label class="kpi-help"><input type="checkbox" id="stats-posthoc-toggle" /> 전체 ${DATA.stats.d2bPosthoc.length}개 조합 보기 (기본: 유의한 ${posthocSig.length}개)</label>
       <div id="stats-posthoc-table-container" style="margin-top:10px"></div>
-    </div>`;
+    </div>
+    ${t_h1 ? `
+    <div class="card" style="margin-top:18px">
+      <h3>가설1 — 단독입찰과 재절차 발생의 관계</h3>
+      <div class="grid grid-2">
+        <div>
+          <ul class="detail-list">
+            <li>분석표본수: <strong>${formatCount(t_h1.분석표본수)}</strong> (단독입찰 ${formatCount(t_h1.단독입찰수)} / 다수입찰 ${formatCount(t_h1.다수입찰수)})</li>
+            <li>재절차발생률: 단독입찰 <strong>${(t_h1.단독입찰_재절차발생률 * 100).toFixed(1)}%</strong> vs 다수입찰 <strong>${(t_h1.다수입찰_재절차발생률 * 100).toFixed(1)}%</strong></li>
+            <li>오즈비(단독 대 다수): <strong>${t_h1.오즈비_단독대다수.toFixed(2)}</strong> (95% CI ${t_h1.오즈비_신뢰구간하한.toFixed(2)}~${t_h1.오즈비_신뢰구간상한.toFixed(2)})</li>
+            <li>검정: ${t_h1.검정방법}, χ² ${t_h1.카이제곱통계량.toFixed(2)} (자유도 ${t_h1.자유도}), p-value ${t_h1.p_value.toExponential(2)}</li>
+          </ul>
+          <p class="section-intro">${h1Interpretation(t_h1)}</p>
+        </div>
+        <div id="chart-h1-rate"></div>
+      </div>
+      <h4 style="margin-top:16px; font-family:var(--font-body); font-size:13.5px; color:var(--text-secondary); font-weight:600">민감도 분석 — 재절차 정의를 바꿔도 결과가 일관되는지 확인</h4>
+      <div id="h1-sensitivity-table-container" style="margin-top:8px"></div>
+    </div>` : ""}`;
 
   function drawPosthoc(showAll) {
     renderDataTable(document.getElementById("stats-posthoc-table-container"), showAll ? DATA.stats.d2bPosthoc : posthocSig,
@@ -588,6 +614,28 @@ function renderStats() {
   }
   drawPosthoc(false);
   document.getElementById("stats-posthoc-toggle").addEventListener("change", (e) => drawPosthoc(e.target.checked));
+
+  if (t_h1) {
+    Plotly.newPlot("chart-h1-rate",
+      [{ type: "bar", x: ["단독입찰", "다수입찰"], y: [t_h1.단독입찰_재절차발생률 * 100, t_h1.다수입찰_재절차발생률 * 100],
+        marker: { color: [cssVar("--status-critical"), cssVar("--accent")] },
+        text: [`${(t_h1.단독입찰_재절차발생률 * 100).toFixed(1)}%`, `${(t_h1.다수입찰_재절차발생률 * 100).toFixed(1)}%`], textposition: "outside",
+        hovertemplate: "%{x}<br>재절차발생률: %{y:.1f}%<extra></extra>" }],
+      baseLayout({ margin: { l: 50, r: 20, t: 20, b: 40 }, yaxis: { title: "재절차발생률(%)", gridcolor: cssVar("--gridline") }, xaxis: { gridcolor: cssVar("--gridline") }, height: 260, showlegend: false }),
+      PLOTLY_CONFIG);
+
+    renderDataTable(document.getElementById("h1-sensitivity-table-container"), DATA.stats.h1Sensitivity,
+      [
+        { key: "시나리오", label: "시나리오" },
+        { key: "사건상태", label: "재절차로 간주한 상태" },
+        { key: "단독입찰_재절차발생률", label: "단독입찰", format: formatRatio },
+        { key: "다수입찰_재절차발생률", label: "다수입찰", format: formatRatio },
+        { key: "오즈비_단독대다수", label: "오즈비", format: (v) => v.toFixed(2) },
+        { key: "p_value", label: "p-value", format: (v) => v.toExponential(2) },
+        { key: "귀무가설기각여부", label: "유의함", format: (v) => (v ? '<span class="badge badge-warning">유의함</span>' : '<span class="badge badge-muted">해당없음</span>') },
+      ],
+      { searchable: false, defaultSortKey: "시나리오", searchKey: "시나리오" });
+  }
 }
 
 /* ========================================================================

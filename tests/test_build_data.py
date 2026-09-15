@@ -74,3 +74,13 @@ def test_stats_block_present_when_legacy_files_exist(bundle):
         assert bundle["stats"]["d2bOverallTest"] is not None
         assert bundle["stats"]["g2bChi2"] is not None
         assert isinstance(bundle["stats"]["d2bPosthoc"], list)
+
+
+def test_h1_block_present_when_legacy_files_exist(bundle):
+    if bundle["stats"]["h1Available"]:
+        t = bundle["stats"]["h1Test"]
+        assert t is not None
+        assert 0 <= t["단독입찰_재절차발생률"] <= 1
+        assert 0 <= t["다수입찰_재절차발생률"] <= 1
+        assert isinstance(bundle["stats"]["h1Sensitivity"], list) and len(bundle["stats"]["h1Sensitivity"]) > 0
+        assert isinstance(bundle["stats"]["h1CrossTab"], list)
