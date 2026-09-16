@@ -21,6 +21,7 @@ import argparse
 import calendar
 import csv
 import json
+import re
 import sys
 import time
 from datetime import datetime, date
@@ -40,9 +41,9 @@ LOG_PATH = RAW_DIR / "_collect.log"
 BASE_URL = "https://apis.data.go.kr/1230000/ao/CntrctInfoService"
 OPERATIONS = [
     "getCntrctInfoListThng",
-    "getCntrctInfoListThngDetail",
-    "getCntrctInfoListThngChgHstry",
-    "getCntrctInfoListThngDltHstry",
+    "getCntrctInfoListFrgcpt",      # 외자 계약현황 - 별도 한도라 ThngDetail보다 먼저 수집
+    "getCntrctInfoListThngDetail",  # 위 Frgcpt 완료 후 이어서 재개
+    # ThngChgHstry, ThngDltHstry: 더 이상 필요 없어 수집 대상에서 제외
 ]
 
 START_YM = "2020-01"
@@ -57,7 +58,7 @@ NUM_OF_ROWS = 999
 REQUEST_DELAY_SEC = 0.4
 RETRY_DELAY_SEC = 3
 MAX_PAGE_RETRY = 2
-DAILY_CALL_SOFT_LIMIT = 1900  # 메인+서브 키(각 1,000/일) 합산 한도에 여유를 둔 최종 안전장치.
+DAILY_CALL_SOFT_LIMIT = 2900  # 주+서브1+서브2 키(각 1,000/일) 합산 한도에 여유를 둔 최종 안전장치.
 # 실제 중단은 각 키가 트래픽 제한 응답(코드 22 등)을 받을 때 자동 전환/중단되는 로직이 담당한다.
 MAX_CONSECUTIVE_UNKNOWN_FAILURES = 3  # 원인 불명 오류가 연속으로 이만큼 나면 전체 중단(무한 스킵 방지).
 
@@ -73,8 +74,8 @@ KNOWN_DONE = {
 }
 
 # data.go.kr 공공데이터포털 공통 에러코드 (일부)
-CODE_QUOTA_EXCEEDED = {"22", "20", "21"}       # 트래픽/서비스 제한 계열 -> 키 전환 또는 중단
-CODE_PARAM_ERROR = {"06", "10", "11", "12", "30", "31", "32", "33"}  # 파라미터/인증 오류 -> 즉시 중단
+CODE_QUOTA_EXCEEDED = {"22", "20", "21", "30", "31", "32"}  # 트래픽/서비스 제한 + 키별 등록·만료·IP 오류 -> 키 전환
+CODE_PARAM_ERROR = {"06", "10", "11", "12", "33"}  # 요청 자체의 파라미터 오류 -> 키를 바꿔도 소용없어 즉시 중단
 CODE_NODATA = {"03"}                            # 정상, 데이터 없음
 CODE_OK = {"00", "0"}
 
@@ -96,6 +97,8 @@ def load_env() -> dict:
         if not line or line.startswith("#") or "=" not in line:
             continue
         k, v = line.split("=", 1)
+        v = v.strip()
+        v = re.split(r"\s+#", v, maxsplit=1)[0]  # 값 뒤에 붙은 인라인 주석(예: "키값 # 메모") 제거
         env[k.strip()] = v.strip()
     return env
 
@@ -383,14 +386,15 @@ def verify(progress: dict) -> list[str]:
 
 def run(preflight_only: bool = False):
     env = load_env()
-    primary_key = env.get("G2B_SCSBID_SERVICE_KEY", "")
+    primary_key = env.get("G2B_CNTRCT_SERVICE_KEY", "")
     sub_key = env.get("SUB_SERVICE_KEY", "")
+    sub_key2 = env.get("SUB_SERVICE_KEY2", "")
 
     progress = load_progress()
     call_counter = [0]
 
     if preflight_only:
-        keyring = KeyRing([primary_key, sub_key])
+        keyring = KeyRing([primary_key, sub_key, sub_key2])
         log("=== preflight 시작: 각 오퍼레이션 미완료 첫 달을 numOfRows=1로 검증 ===")
         for op in OPERATIONS:
             pending = pending_months(progress, op)
@@ -411,7 +415,7 @@ def run(preflight_only: bool = False):
         log(f"=== preflight 종료 (호출 {call_counter[0]}건 사용) ===")
         return
 
-    keyring = KeyRing([primary_key, sub_key], progress=progress)
+    keyring = KeyRing([primary_key, sub_key, sub_key2], progress=progress)
 
     leftover = progress.get("current")
     if leftover:

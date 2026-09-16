@@ -1,0 +1,971 @@
+{
+  "operations": {
+    "getCntrctInfoListThng": {
+      "done": {
+        "2024-01": {
+          "rows": 19826,
+          "note": "이전 실행에서 완료 확인"
+        },
+        "2024-02": {
+          "rows": 27256,
+          "note": "이전 실행에서 완료 확인"
+        },
+        "2024-03": {
+          "rows": 29235,
+          "note": "이전 실행에서 완료 확인"
+        },
+        "2024-04": {
+          "rows": 22600,
+          "note": "이전 실행에서 완료 확인"
+        },
+        "2024-11": {
+          "rows": 30828,
+          "note": "이전 실행에서 완료 확인"
+        },
+        "2024-12": {
+          "rows": 36588,
+          "note": "이전 실행에서 완료 확인"
+        },
+        "2025-01": {
+          "rows": 26014,
+          "note": "이전 실행에서 완료 확인"
+        },
+        "2025-02": {
+          "rows": 63283,
+          "note": "이전 실행에서 완료 확인"
+        },
+        "2025-03": {
+          "rows": 65310,
+          "note": "이전 실행에서 완료 확인"
+        },
+        "2025-04": {
+          "rows": 66024,
+          "note": "이전 실행에서 완료 확인"
+        },
+        "2025-05": {
+          "rows": 58876,
+          "note": "이전 실행에서 완료 확인"
+        },
+        "2025-06": {
+          "rows": 7992,
+          "note": "이전 실행에서 완료 확인"
+        },
+        "2023-01": {
+          "rows": 16696,
+          "collected_at": "2026-09-16T02:00:33"
+        },
+        "2023-02": {
+          "rows": 26431,
+          "collected_at": "2026-09-16T02:02:32"
+        },
+        "2023-03": {
+          "rows": 30333,
+          "collected_at": "2026-09-16T02:04:43"
+        },
+        "2023-04": {
+          "rows": 26275,
+          "collected_at": "2026-09-16T02:06:30"
+        },
+        "2020-01": {
+          "rows": 14662,
+          "collected_at": "2026-09-16T02:09:27"
+        },
+        "2020-02": {
+          "rows": 28738,
+          "collected_at": "2026-09-16T02:11:11"
+        },
+        "2020-03": {
+          "rows": 29199,
+          "collected_at": "2026-09-16T02:13:24"
+        },
+        "2020-04": {
+          "rows": 26230,
+          "collected_at": "2026-09-16T02:14:49"
+        },
+        "2020-05": {
+          "rows": 27498,
+          "collected_at": "2026-09-16T02:16:26"
+        },
+        "2020-06": {
+          "rows": 28990,
+          "collected_at": "2026-09-16T02:18:15"
+        },
+        "2020-07": {
+          "rows": 22102,
+          "collected_at": "2026-09-16T02:19:35"
+        },
+        "2020-08": {
+          "rows": 20335,
+          "collected_at": "2026-09-16T02:20:45"
+        },
+        "2020-09": {
+          "rows": 23751,
+          "collected_at": "2026-09-16T02:22:12"
+        },
+        "2020-10": {
+          "rows": 25080,
+          "collected_at": "2026-09-16T02:23:39"
+        },
+        "2020-11": {
+          "rows": 29950,
+          "collected_at": "2026-09-16T02:25:31"
+        },
+        "2020-12": {
+          "rows": 34229,
+          "collected_at": "2026-09-16T02:27:46"
+        },
+        "2021-01": {
+          "rows": 17151,
+          "collected_at": "2026-09-16T02:28:48"
+        },
+        "2021-02": {
+          "rows": 25606,
+          "collected_at": "2026-09-16T02:30:16"
+        },
+        "2021-03": {
+          "rows": 30004,
+          "collected_at": "2026-09-16T02:32:00"
+        },
+        "2021-04": {
+          "rows": 28155,
+          "collected_at": "2026-09-16T02:33:46"
+        },
+        "2021-05": {
+          "rows": 24644,
+          "collected_at": "2026-09-16T02:35:15"
+        },
+        "2021-06": {
+          "rows": 27283,
+          "collected_at": "2026-09-16T02:36:57"
+        },
+        "2021-07": {
+          "rows": 21100,
+          "collected_at": "2026-09-16T02:38:04"
+        },
+        "2021-08": {
+          "rows": 20876,
+          "collected_at": "2026-09-16T02:39:12"
+        },
+        "2021-09": {
+          "rows": 21477,
+          "collected_at": "2026-09-16T02:40:31"
+        },
+        "2021-10": {
+          "rows": 25735,
+          "collected_at": "2026-09-16T02:42:09"
+        },
+        "2021-11": {
+          "rows": 31730,
+          "collected_at": "2026-09-16T02:44:09"
+        },
+        "2021-12": {
+          "rows": 36274,
+          "collected_at": "2026-09-16T02:46:40"
+        },
+        "2022-01": {
+          "rows": 16848,
+          "collected_at": "2026-09-16T02:47:38"
+        },
+        "2022-02": {
+          "rows": 24968,
+          "collected_at": "2026-09-16T02:49:06"
+        },
+        "2022-03": {
+          "rows": 27882,
+          "collected_at": "2026-09-16T02:50:49"
+        },
+        "2022-04": {
+          "rows": 27855,
+          "collected_at": "2026-09-16T02:52:22"
+        },
+        "2022-05": {
+          "rows": 27340,
+          "collected_at": "2026-09-16T02:53:52"
+        },
+        "2022-06": {
+          "rows": 26247,
+          "collected_at": "2026-09-16T02:55:10"
+        },
+        "2022-07": {
+          "rows": 21719,
+          "collected_at": "2026-09-16T02:56:18"
+        },
+        "2022-08": {
+          "rows": 21324,
+          "collected_at": "2026-09-16T02:57:20"
+        },
+        "2022-09": {
+          "rows": 22519,
+          "collected_at": "2026-09-16T02:58:31"
+        },
+        "2022-10": {
+          "rows": 25337,
+          "collected_at": "2026-09-16T02:59:55"
+        },
+        "2022-11": {
+          "rows": 30711,
+          "collected_at": "2026-09-16T03:02:23"
+        },
+        "2022-12": {
+          "rows": 35084,
+          "collected_at": "2026-09-16T03:05:01"
+        },
+        "2023-05": {
+          "rows": 26588,
+          "collected_at": "2026-09-16T03:06:50"
+        },
+        "2023-06": {
+          "rows": 28184,
+          "collected_at": "2026-09-16T03:08:42"
+        },
+        "2023-07": {
+          "rows": 22211,
+          "collected_at": "2026-09-16T06:37:04"
+        },
+        "2023-08": {
+          "rows": 23282,
+          "collected_at": "2026-09-16T06:38:27"
+        },
+        "2023-09": {
+          "rows": 22668,
+          "collected_at": "2026-09-16T06:39:44"
+        },
+        "2023-10": {
+          "rows": 27802,
+          "collected_at": "2026-09-16T06:41:33"
+        },
+        "2023-11": {
+          "rows": 34059,
+          "collected_at": "2026-09-16T06:43:41"
+        },
+        "2023-12": {
+          "rows": 34635,
+          "collected_at": "2026-09-16T06:45:41"
+        },
+        "2024-05": {
+          "rows": 27007,
+          "collected_at": "2026-09-16T06:47:19"
+        },
+        "2024-06": {
+          "rows": 25814,
+          "collected_at": "2026-09-16T06:48:41"
+        },
+        "2024-07": {
+          "rows": 24888,
+          "collected_at": "2026-09-16T06:50:03"
+        },
+        "2024-08": {
+          "rows": 23448,
+          "collected_at": "2026-09-16T06:51:21"
+        },
+        "2024-09": {
+          "rows": 22119,
+          "collected_at": "2026-09-16T06:52:36"
+        },
+        "2024-10": {
+          "rows": 26923,
+          "collected_at": "2026-09-16T06:54:07"
+        },
+        "2025-07": {
+          "rows": 68348,
+          "collected_at": "2026-09-16T06:59:54"
+        },
+        "2025-08": {
+          "rows": 53084,
+          "collected_at": "2026-09-16T07:04:21"
+        },
+        "2025-09": {
+          "rows": 57072,
+          "collected_at": "2026-09-16T07:09:07"
+        },
+        "2025-10": {
+          "rows": 54832,
+          "collected_at": "2026-09-16T07:13:23"
+        },
+        "2025-11": {
+          "rows": 69427,
+          "collected_at": "2026-09-16T09:16:36"
+        },
+        "2025-12": {
+          "rows": 89111,
+          "collected_at": "2026-09-16T09:29:27"
+        },
+        "2026-01": {
+          "rows": 55046,
+          "collected_at": "2026-09-16T09:36:17"
+        },
+        "2026-02": {
+          "rows": 61440,
+          "collected_at": "2026-09-16T09:43:18"
+        },
+        "2026-03": {
+          "rows": 71953,
+          "collected_at": "2026-09-16T09:51:29"
+        },
+        "2026-04": {
+          "rows": 73821,
+          "collected_at": "2026-09-16T09:59:41"
+        },
+        "2026-05": {
+          "rows": 60365,
+          "collected_at": "2026-09-16T10:08:29"
+        },
+        "2026-06": {
+          "rows": 70027,
+          "collected_at": "2026-09-16T10:16:41"
+        },
+        "2026-07": {
+          "rows": 68888,
+          "collected_at": "2026-09-16T10:24:55"
+        },
+        "2026-08": {
+          "rows": 58999,
+          "collected_at": "2026-09-16T10:31:10"
+        },
+        "2026-09": {
+          "rows": 31496,
+          "collected_at": "2026-09-16T10:33:34"
+        }
+      },
+      "failed": {}
+    },
+    "getCntrctInfoListThngDetail": {
+      "done": {
+        "2020-01": {
+          "rows": 147906,
+          "collected_at": "2026-09-16T10:56:30"
+        },
+        "2020-02": {
+          "rows": 206259,
+          "collected_at": "2026-09-16T11:05:31"
+        },
+        "2020-03": {
+          "rows": 222580,
+          "collected_at": "2026-09-16T11:15:58"
+        },
+        "2020-04": {
+          "rows": 205291,
+          "collected_at": "2026-09-16T11:25:27"
+        },
+        "2020-05": {
+          "rows": 163216,
+          "collected_at": "2026-09-16T11:32:45"
+        },
+        "2020-06": {
+          "rows": 198077,
+          "collected_at": "2026-09-16T11:47:33"
+        },
+        "2020-07": {
+          "rows": 193127,
+          "collected_at": "2026-09-16T11:55:34"
+        },
+        "2020-08": {
+          "rows": 180622,
+          "collected_at": "2026-09-16T12:02:30"
+        },
+        "2020-09": {
+          "rows": 207284,
+          "collected_at": "2026-09-16T12:12:26"
+        },
+        "2020-10": {
+          "rows": 188124,
+          "collected_at": "2026-09-16T12:20:09"
+        },
+        "2020-11": {
+          "rows": 217565,
+          "collected_at": "2026-09-16T12:31:45"
+        },
+        "2020-12": {
+          "rows": 222964,
+          "collected_at": "2026-09-16T12:41:17"
+        },
+        "2021-01": {
+          "rows": 242172,
+          "collected_at": "2026-09-16T12:50:27"
+        },
+        "2021-02": {
+          "rows": 194077,
+          "collected_at": "2026-09-16T12:58:10"
+        }
+      },
+      "failed": {}
+    },
+    "getCntrctInfoListThngChgHstry": {
+      "done": {
+        "2024-01": {
+          "rows": null,
+          "note": "이전 실행에서 완료 확인"
+        },
+        "2024-02": {
+          "rows": null,
+          "note": "이전 실행에서 완료 확인"
+        }
+      },
+      "failed": {}
+    },
+    "getCntrctInfoListThngDltHstry": {
+      "done": {},
+      "failed": {}
+    },
+    "getCntrctInfoListFrgcpt": {
+      "done": {
+        "2020-01": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:31:52",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2020-02": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:31:53",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2020-03": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:31:54",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2020-04": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:31:55",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2020-05": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:31:56",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2020-06": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:31:57",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2020-07": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:31:58",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2020-08": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:31:59",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2020-09": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:00",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2020-10": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:01",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2020-11": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:02",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2020-12": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:04",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2021-01": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:05",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2021-02": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:06",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2021-03": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:07",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2021-04": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:09",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2021-05": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:10",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2021-06": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:11",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2021-07": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:13",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2021-08": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:13",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2021-09": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:14",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2021-10": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:15",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2021-11": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:17",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2021-12": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:18",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2022-01": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:19",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2022-02": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:20",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2022-03": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:21",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2022-04": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:22",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2022-05": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:24",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2022-06": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:25",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2022-07": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:26",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2022-08": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:27",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2022-09": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:28",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2022-10": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:53",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2022-11": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:54",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2022-12": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:55",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2023-01": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:56",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2023-02": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:57",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2023-03": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:58",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2023-04": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:58",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2023-05": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:32:59",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2023-06": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:33:00",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2023-07": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:33:02",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2023-08": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:33:04",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2023-09": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:33:06",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2023-10": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:33:07",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2023-11": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:33:08",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2023-12": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:33:09",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2024-01": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:33:10",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2024-02": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:33:57",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2024-03": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:33:58",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2024-04": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:34:46",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2024-05": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:34:47",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2024-06": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:34:48",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2024-07": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:34:48",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2024-08": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:35:12",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2024-09": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:35:13",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2024-10": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:35:14",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2024-11": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:35:15",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2024-12": {
+          "rows": 0,
+          "collected_at": "2026-09-16T17:35:17",
+          "note": "정상 조회 결과 0건(수집 실패 아님)"
+        },
+        "2025-01": {
+          "rows": 38,
+          "collected_at": "2026-09-16T17:35:18"
+        },
+        "2025-02": {
+          "rows": 42,
+          "collected_at": "2026-09-16T17:35:20"
+        },
+        "2025-03": {
+          "rows": 155,
+          "collected_at": "2026-09-16T17:35:22"
+        },
+        "2025-04": {
+          "rows": 318,
+          "collected_at": "2026-09-16T17:35:26"
+        },
+        "2025-05": {
+          "rows": 491,
+          "collected_at": "2026-09-16T17:35:30"
+        },
+        "2025-06": {
+          "rows": 811,
+          "collected_at": "2026-09-16T17:35:39"
+        },
+        "2025-07": {
+          "rows": 445,
+          "collected_at": "2026-09-16T17:35:42"
+        },
+        "2025-08": {
+          "rows": 323,
+          "collected_at": "2026-09-16T17:35:45"
+        },
+        "2025-09": {
+          "rows": 378,
+          "collected_at": "2026-09-16T17:35:49"
+        },
+        "2025-10": {
+          "rows": 203,
+          "collected_at": "2026-09-16T17:35:53"
+        },
+        "2025-11": {
+          "rows": 233,
+          "collected_at": "2026-09-16T17:35:58"
+        },
+        "2025-12": {
+          "rows": 230,
+          "collected_at": "2026-09-16T17:36:03"
+        },
+        "2026-01": {
+          "rows": 81,
+          "collected_at": "2026-09-16T17:36:06"
+        },
+        "2026-02": {
+          "rows": 104,
+          "collected_at": "2026-09-16T17:36:09"
+        },
+        "2026-03": {
+          "rows": 166,
+          "collected_at": "2026-09-16T17:36:12"
+        },
+        "2026-04": {
+          "rows": 356,
+          "collected_at": "2026-09-16T17:36:16"
+        },
+        "2026-05": {
+          "rows": 303,
+          "collected_at": "2026-09-16T17:36:44"
+        },
+        "2026-06": {
+          "rows": 512,
+          "collected_at": "2026-09-16T17:36:48"
+        },
+        "2026-07": {
+          "rows": 426,
+          "collected_at": "2026-09-16T17:36:50"
+        },
+        "2026-08": {
+          "rows": 222,
+          "collected_at": "2026-09-16T17:36:53"
+        },
+        "2026-09": {
+          "rows": 154,
+          "collected_at": "2026-09-16T17:36:54"
+        }
+      },
+      "failed": {}
+    }
+  },
+  "calls_used_this_run": 0,
+  "current": null,
+  "halted": {
+    "reason": "quota_exhausted",
+    "detail": "사용 가능한 서비스키가 모두 트래픽 제한에 걸렸습니다",
+    "op": "getCntrctInfoListThngDetail",
+    "ym": "2021-03",
+    "at": "2026-09-16T17:36:54"
+  },
+  "key_switch_log": [
+    {
+      "at": "2026-09-16T02:58:16",
+      "from_idx": 0,
+      "to_idx": 1,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThng/2022-09"
+    },
+    {
+      "at": "2026-09-16T06:35:34",
+      "from_idx": 0,
+      "to_idx": 1,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThng/2023-07"
+    },
+    {
+      "at": "2026-09-16T08:45:19",
+      "from_idx": 0,
+      "to_idx": 1,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThng/2025-11"
+    },
+    {
+      "at": "2026-09-16T08:45:19",
+      "from_idx": 1,
+      "to_idx": 2,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThng/2025-11"
+    },
+    {
+      "at": "2026-09-16T08:53:32",
+      "from_idx": 0,
+      "to_idx": 1,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThng/2025-11"
+    },
+    {
+      "at": "2026-09-16T08:54:38",
+      "from_idx": 0,
+      "to_idx": 1,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThng/2025-11"
+    },
+    {
+      "at": "2026-09-16T08:54:38",
+      "from_idx": 1,
+      "to_idx": 2,
+      "code": "30",
+      "msg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+      "context": "getCntrctInfoListThng/2025-11"
+    },
+    {
+      "at": "2026-09-16T08:54:39",
+      "from_idx": 2,
+      "to_idx": 3,
+      "code": "30",
+      "msg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+      "context": "getCntrctInfoListThng/2025-11"
+    },
+    {
+      "at": "2026-09-16T08:58:47",
+      "from_idx": 0,
+      "to_idx": 1,
+      "code": "30",
+      "msg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+      "context": "getCntrctInfoListThng/2025-11"
+    },
+    {
+      "at": "2026-09-16T08:58:47",
+      "from_idx": 1,
+      "to_idx": 2,
+      "code": "30",
+      "msg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+      "context": "getCntrctInfoListThng/2025-11"
+    },
+    {
+      "at": "2026-09-16T08:58:48",
+      "from_idx": 2,
+      "to_idx": 3,
+      "code": "30",
+      "msg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+      "context": "getCntrctInfoListThng/2025-11"
+    },
+    {
+      "at": "2026-09-16T09:09:02",
+      "from_idx": 0,
+      "to_idx": 1,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThng/2025-11"
+    },
+    {
+      "at": "2026-09-16T09:09:02",
+      "from_idx": 1,
+      "to_idx": 2,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThng/2025-11"
+    },
+    {
+      "at": "2026-09-16T11:33:53",
+      "from_idx": 0,
+      "to_idx": 1,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2020-06"
+    },
+    {
+      "at": "2026-09-16T11:38:14",
+      "from_idx": 0,
+      "to_idx": 1,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2020-06"
+    },
+    {
+      "at": "2026-09-16T12:16:40",
+      "from_idx": 1,
+      "to_idx": 2,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2020-10"
+    },
+    {
+      "at": "2026-09-16T12:59:36",
+      "from_idx": 2,
+      "to_idx": 3,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2021-03"
+    },
+    {
+      "at": "2026-09-16T17:36:54",
+      "from_idx": 0,
+      "to_idx": 1,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2021-03"
+    },
+    {
+      "at": "2026-09-16T17:36:54",
+      "from_idx": 1,
+      "to_idx": 2,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2021-03"
+    },
+    {
+      "at": "2026-09-16T17:36:54",
+      "from_idx": 2,
+      "to_idx": 3,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2021-03"
+    }
+  ]
+}
