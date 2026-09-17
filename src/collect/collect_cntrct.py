@@ -41,8 +41,8 @@ LOG_PATH = RAW_DIR / "_collect.log"
 BASE_URL = "https://apis.data.go.kr/1230000/ao/CntrctInfoService"
 OPERATIONS = [
     "getCntrctInfoListThng",
-    "getCntrctInfoListFrgcpt",      # 외자 계약현황 - 별도 한도라 ThngDetail보다 먼저 수집
-    "getCntrctInfoListThngDetail",  # 위 Frgcpt 완료 후 이어서 재개
+    "getCntrctInfoListFrgcpt",         # 외자 계약현황 - 별도 한도라 ThngDetail보다 먼저 수집
+    "getCntrctInfoListThngDetail",     # 위 Frgcpt 완료 후 이어서 재개
     # ThngChgHstry, ThngDltHstry: 더 이상 필요 없어 수집 대상에서 제외
 ]
 
@@ -58,7 +58,7 @@ NUM_OF_ROWS = 999
 REQUEST_DELAY_SEC = 0.4
 RETRY_DELAY_SEC = 3
 MAX_PAGE_RETRY = 2
-DAILY_CALL_SOFT_LIMIT = 2900  # 주+서브1+서브2 키(각 1,000/일) 합산 한도에 여유를 둔 최종 안전장치.
+CALLS_PER_KEY_SOFT_LIMIT = 975  # 키 1개당 일일 한도(1,000)에 여유를 둔 안전장치.
 # 실제 중단은 각 키가 트래픽 제한 응답(코드 22 등)을 받을 때 자동 전환/중단되는 로직이 담당한다.
 MAX_CONSECUTIVE_UNKNOWN_FAILURES = 3  # 원인 불명 오류가 연속으로 이만큼 나면 전체 중단(무한 스킵 방지).
 
@@ -101,6 +101,22 @@ def load_env() -> dict:
         v = re.split(r"\s+#", v, maxsplit=1)[0]  # 값 뒤에 붙은 인라인 주석(예: "키값 # 메모") 제거
         env[k.strip()] = v.strip()
     return env
+
+
+def collect_service_keys(env: dict) -> list[str]:
+    """G2B_CNTRCT_SERVICE_KEY(기본키) + SUB_SERVICE_KEY, SUB_SERVICE_KEY2, SUB_SERVICE_KEY3... (서브키들)을
+    번호 순서대로 모은다. 서브키가 몇 개 추가되든 .env에 SUB_SERVICE_KEY<N> 형식으로만 넣으면
+    코드 수정 없이 바로 인식된다."""
+    keys = [env.get("G2B_CNTRCT_SERVICE_KEY", "")]
+    sub_entries = []
+    for k, v in env.items():
+        m = re.fullmatch(r"SUB_SERVICE_KEY(\d*)", k)
+        if m:
+            n = int(m.group(1)) if m.group(1) else 1
+            sub_entries.append((n, v))
+    sub_entries.sort(key=lambda pair: pair[0])
+    keys.extend(v for _, v in sub_entries)
+    return [k for k in keys if k]
 
 
 def month_range(start_ym: str, end_ym: str) -> list[str]:
@@ -202,26 +218,38 @@ def pending_months(progress: dict, op: str) -> list[str]:
 
 
 def call_api(op: str, params: dict, keyring: KeyRing, call_counter: list[int], context: str = "") -> dict:
-    """단일 페이지 호출. 성공 시 response body dict 반환, 실패 시 예외."""
+    """단일 페이지 호출. 성공 시 response body dict 반환, 실패 시 예외.
+
+    키 전환(트래픽 제한)은 MAX_PAGE_RETRY 재시도 횟수를 소모하지 않는다. 키 개수가
+    늘어날수록 소진된 키를 건너뛰는 데 필요한 시도 횟수도 늘어나는데, 재시도 횟수를
+    같이 깎으면 아직 시도조차 안 해본 멀쩡한 키에 도달하기 전에 실패 처리되는
+    버그가 생긴다. 실제 소진 여부는 KeyRing.rotate()가 QuotaExhausted를 던지는 것으로
+    판단하므로, 여기서는 재시도 횟수와 무관하게 계속 진행해도 안전하다.
+    """
     context = context or op
-    last_err = None
-    for attempt in range(MAX_PAGE_RETRY + 1):
+    unknown_retry = 0
+    while True:
         params_with_key = dict(params)
         params_with_key["serviceKey"] = keyring.current()
         try:
             resp = requests.get(f"{BASE_URL}/{op}", params=params_with_key, timeout=20)
             call_counter[0] += 1
         except requests.RequestException as e:
-            last_err = e
-            log(f"  [{context}] 네트워크 오류 (재시도 {attempt+1}/{MAX_PAGE_RETRY}): {e}")
+            unknown_retry += 1
+            log(f"  [{context}] 네트워크 오류 (재시도 {unknown_retry}/{MAX_PAGE_RETRY}): {e}")
+            if unknown_retry > MAX_PAGE_RETRY:
+                raise RuntimeError(f"페이지 호출 반복 실패(네트워크): {e}")
             time.sleep(RETRY_DELAY_SEC)
             continue
 
         try:
             data = resp.json()
         except ValueError:
-            last_err = RuntimeError(f"JSON 파싱 실패: status={resp.status_code} body[:300]={resp.text[:300]!r}")
-            log(f"  {last_err}")
+            unknown_retry += 1
+            err = RuntimeError(f"JSON 파싱 실패: status={resp.status_code} body[:300]={resp.text[:300]!r}")
+            log(f"  {err}")
+            if unknown_retry > MAX_PAGE_RETRY:
+                raise err
             time.sleep(RETRY_DELAY_SEC)
             continue
 
@@ -249,18 +277,19 @@ def call_api(op: str, params: dict, keyring: KeyRing, call_counter: list[int], c
 
         if code in CODE_QUOTA_EXCEEDED:
             log(f"  [{context}] 트래픽/서비스 제한 코드 {code} ({msg}) -> 다음 키로 전환 시도")
-            keyring.rotate(code=code, msg=msg, context=context)
+            keyring.rotate(code=code, msg=msg, context=context)  # 키가 더 없으면 QuotaExhausted를 던짐
             continue
 
         if code in CODE_PARAM_ERROR:
             raise ParamError(f"파라미터/인증 오류 resultCode={code} resultMsg={msg} params={params}")
 
         # 알려지지 않은 코드: 한 번 더 재시도 후 실패 처리
-        last_err = RuntimeError(f"알 수 없는 resultCode={code} resultMsg={msg}")
-        log(f"  [{context}] {last_err} (재시도 {attempt+1}/{MAX_PAGE_RETRY})")
+        unknown_retry += 1
+        err = RuntimeError(f"알 수 없는 resultCode={code} resultMsg={msg}")
+        log(f"  [{context}] {err} (재시도 {unknown_retry}/{MAX_PAGE_RETRY})")
+        if unknown_retry > MAX_PAGE_RETRY:
+            raise err
         time.sleep(RETRY_DELAY_SEC)
-
-    raise RuntimeError(f"페이지 호출 반복 실패: {last_err}")
 
 
 def extract_rows(body: dict) -> tuple[list[dict], int]:
@@ -325,7 +354,9 @@ def print_status(progress: dict):
         done = progress["operations"][op]["done"]
         failed = progress["operations"][op]["failed"]
         total_rows = sum((v.get("rows") or 0) for v in done.values())
-        print(f"{op}: 완료 {len(done)}/{total_months} (실패 {len(failed)}), 누적 행수 {total_rows:,}")
+        quota_halted = progress["operations"][op].get("quota_halted_today")
+        suffix = f" [오늘 한도 소진: {quota_halted['ym']} 부터]" if quota_halted else ""
+        print(f"{op}: 완료 {len(done)}/{total_months} (실패 {len(failed)}), 누적 행수 {total_rows:,}{suffix}")
     if progress.get("current"):
         print(f"진행 중(중단 시 이어받을 위치): {progress['current']}")
     if progress.get("halted"):
@@ -386,17 +417,16 @@ def verify(progress: dict) -> list[str]:
 
 def run(preflight_only: bool = False):
     env = load_env()
-    primary_key = env.get("G2B_CNTRCT_SERVICE_KEY", "")
-    sub_key = env.get("SUB_SERVICE_KEY", "")
-    sub_key2 = env.get("SUB_SERVICE_KEY2", "")
+    service_keys = collect_service_keys(env)
+    log(f"사용 가능한 서비스키 {len(service_keys)}개 로드됨")
 
     progress = load_progress()
     call_counter = [0]
 
     if preflight_only:
-        keyring = KeyRing([primary_key, sub_key, sub_key2])
         log("=== preflight 시작: 각 오퍼레이션 미완료 첫 달을 numOfRows=1로 검증 ===")
         for op in OPERATIONS:
+            keyring = KeyRing(service_keys)  # 오퍼레이션별 별도 한도
             pending = pending_months(progress, op)
             if not pending:
                 log(f"{op}: 미완료 월 없음, preflight 스킵")
@@ -415,8 +445,6 @@ def run(preflight_only: bool = False):
         log(f"=== preflight 종료 (호출 {call_counter[0]}건 사용) ===")
         return
 
-    keyring = KeyRing([primary_key, sub_key, sub_key2], progress=progress)
-
     leftover = progress.get("current")
     if leftover:
         log(f"이전 실행이 {leftover['op']} / {leftover['ym']} 수집 중 비정상 종료된 것으로 보입니다"
@@ -434,9 +462,18 @@ def run(preflight_only: bool = False):
 
     try:
         for op in OPERATIONS:
+            # 트래픽 한도는 오퍼레이션별로 별도 부여되므로(공식 문서 기준 오퍼레이션당
+            # 키 1개당 1,000건/일), 키 순번과 호출 카운터를 오퍼레이션마다 새로 초기화한다.
+            # 이렇게 안 하면 앞선 오퍼레이션에서 소진된 키가 다음 오퍼레이션에서도
+            # 계속 건너뛰어져, 실제로는 멀쩡한 키의 한도를 못 쓰게 된다.
+            keyring = KeyRing(service_keys, progress=progress)
+            call_counter[0] = 0
+            progress["operations"][op].pop("quota_halted_today", None)
+            daily_call_soft_limit = CALLS_PER_KEY_SOFT_LIMIT * len(service_keys)
+
             for ym in pending_months(progress, op):
-                if call_counter[0] >= DAILY_CALL_SOFT_LIMIT:
-                    log(f"자체 소프트 캡({DAILY_CALL_SOFT_LIMIT}건) 도달 -> 저장 후 종료")
+                if call_counter[0] >= daily_call_soft_limit:
+                    log(f"{op}: 자체 소프트 캡({daily_call_soft_limit}건, 키 {len(service_keys)}개 기준) 도달 -> 저장 후 종료")
                     progress["current"] = None
                     save_progress(progress)
                     log("오늘은 여기서 중단합니다. 내일(또는 트래픽 리셋 후) 다시 실행하면 이어받습니다.")
@@ -460,14 +497,13 @@ def run(preflight_only: bool = False):
                     save_progress(progress)
                     return
                 except QuotaExhausted as e:
-                    log(f"{op} / {ym}: 트래픽 제한으로 전체 중단 -> {e}")
-                    progress["halted"] = {
-                        "reason": "quota_exhausted", "detail": str(e), "op": op, "ym": ym,
-                        "at": datetime.now().isoformat(timespec="seconds"),
+                    log(f"{op} / {ym}: 오늘 {op}의 트래픽 한도를 모두 소진했습니다 -> {op} 수집을 중단하고 다음 오퍼레이션으로 넘어갑니다 ({e})")
+                    progress["operations"][op]["quota_halted_today"] = {
+                        "detail": str(e), "ym": ym, "at": datetime.now().isoformat(timespec="seconds"),
                     }
                     progress["current"] = None
                     save_progress(progress)
-                    return
+                    break
                 except Exception as e:
                     consecutive_unknown_failures += 1
                     log(f"{op} / {ym}: 수집 실패 ({consecutive_unknown_failures}/{MAX_CONSECUTIVE_UNKNOWN_FAILURES}), 스킵하고 다음으로 -> {e}")
@@ -497,8 +533,13 @@ def run(preflight_only: bool = False):
                 save_progress(progress)
                 log(f"{op} / {ym} 완료: {len(rows):,}행 (누적 호출 {call_counter[0]}건)")
 
-        log("=== 대상 기간 전체 수집 완료, 검증을 실행합니다 ===")
-        verify(progress)
+        remaining = {op: len(pending_months(progress, op)) for op in OPERATIONS}
+        remaining = {op: n for op, n in remaining.items() if n > 0}
+        if remaining:
+            log(f"=== 오늘 처리 가능한 만큼 진행 후 종료 (아직 남은 개월: {remaining}) ===")
+        else:
+            log("=== 대상 기간 전체 수집 완료, 검증을 실행합니다 ===")
+            verify(progress)
     finally:
         save_progress(progress)
         log("=== 이번 실행 종료 ===")

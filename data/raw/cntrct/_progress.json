@@ -386,6 +386,94 @@
         "2021-02": {
           "rows": 194077,
           "collected_at": "2026-09-16T12:58:10"
+        },
+        "2021-03": {
+          "rows": 255706,
+          "collected_at": "2026-09-17T08:40:40"
+        },
+        "2021-04": {
+          "rows": 254993,
+          "collected_at": "2026-09-17T08:53:21"
+        },
+        "2021-05": {
+          "rows": 226140,
+          "collected_at": "2026-09-17T09:03:39"
+        },
+        "2021-06": {
+          "rows": 233288,
+          "collected_at": "2026-09-17T09:15:14"
+        },
+        "2021-07": {
+          "rows": 230488,
+          "collected_at": "2026-09-17T09:25:33"
+        },
+        "2021-08": {
+          "rows": 186446,
+          "collected_at": "2026-09-17T09:32:46"
+        },
+        "2021-09": {
+          "rows": 202884,
+          "collected_at": "2026-09-17T09:41:21"
+        },
+        "2021-10": {
+          "rows": 217232,
+          "collected_at": "2026-09-17T09:52:29"
+        },
+        "2021-11": {
+          "rows": 245022,
+          "collected_at": "2026-09-17T10:06:43"
+        },
+        "2021-12": {
+          "rows": 273606,
+          "collected_at": "2026-09-17T10:24:04"
+        },
+        "2022-01": {
+          "rows": 202967,
+          "collected_at": "2026-09-17T10:32:46"
+        },
+        "2022-02": {
+          "rows": 196720,
+          "collected_at": "2026-09-17T10:41:26"
+        },
+        "2022-03": {
+          "rows": 280032,
+          "collected_at": "2026-09-17T11:41:54"
+        },
+        "2022-04": {
+          "rows": 284609,
+          "collected_at": "2026-09-17T11:57:24"
+        },
+        "2022-05": {
+          "rows": 286123,
+          "collected_at": "2026-09-17T12:13:40"
+        },
+        "2022-06": {
+          "rows": 267440,
+          "collected_at": "2026-09-17T12:27:31"
+        },
+        "2022-07": {
+          "rows": 250071,
+          "collected_at": "2026-09-17T12:38:44"
+        },
+        "2022-08": {
+          "rows": 230671,
+          "collected_at": "2026-09-17T12:49:30"
+        },
+        "2022-09": {
+          "rows": 223307,
+          "collected_at": "2026-09-17T15:16:26"
+        },
+        "2022-10": {
+          "rows": 277577,
+          "collected_at": "2026-09-17T15:34:30"
+        },
+        "2022-11": {
+          "rows": 267727,
+          "collected_at": "2026-09-17T15:51:43"
+        },
+        "2022-12": {
+          "rows": 300941,
+          "collected_at": "2026-09-17T16:37:41"
         }
       },
       "failed": {}
@@ -798,14 +886,12 @@
     }
   },
   "calls_used_this_run": 0,
-  "current": null,
-  "halted": {
-    "reason": "quota_exhausted",
-    "detail": "사용 가능한 서비스키가 모두 트래픽 제한에 걸렸습니다",
+  "current": {
     "op": "getCntrctInfoListThngDetail",
-    "ym": "2021-03",
-    "at": "2026-09-16T17:36:54"
+    "ym": "2023-01",
+    "started_at": "2026-09-17T16:39:26"
   },
+  "halted": null,
   "key_switch_log": [
     {
       "at": "2026-09-16T02:58:16",
@@ -966,6 +1052,238 @@
       "code": "22",
       "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
       "context": "getCntrctInfoListThngDetail/2021-03"
+    },
+    {
+      "at": "2026-09-17T09:16:02",
+      "from_idx": 0,
+      "to_idx": 1,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2021-07"
+    },
+    {
+      "at": "2026-09-17T10:01:19",
+      "from_idx": 1,
+      "to_idx": 2,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2021-11"
+    },
+    {
+      "at": "2026-09-17T10:55:28",
+      "from_idx": 2,
+      "to_idx": 3,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-03"
+    },
+    {
+      "at": "2026-09-17T11:15:46",
+      "from_idx": 0,
+      "to_idx": 1,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-03"
+    },
+    {
+      "at": "2026-09-17T11:15:46",
+      "from_idx": 1,
+      "to_idx": 2,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-03"
+    },
+    {
+      "at": "2026-09-17T11:15:46",
+      "from_idx": 2,
+      "to_idx": 3,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-03"
+    },
+    {
+      "at": "2026-09-17T11:27:02",
+      "from_idx": 0,
+      "to_idx": 1,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-03"
+    },
+    {
+      "at": "2026-09-17T11:27:02",
+      "from_idx": 1,
+      "to_idx": 2,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-03"
+    },
+    {
+      "at": "2026-09-17T11:27:02",
+      "from_idx": 2,
+      "to_idx": 3,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-03"
+    },
+    {
+      "at": "2026-09-17T12:09:40",
+      "from_idx": 3,
+      "to_idx": 4,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-05"
+    },
+    {
+      "at": "2026-09-17T12:58:49",
+      "from_idx": 4,
+      "to_idx": 5,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-09"
+    },
+    {
+      "at": "2026-09-17T14:50:46",
+      "from_idx": 0,
+      "to_idx": 1,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-09"
+    },
+    {
+      "at": "2026-09-17T14:50:46",
+      "from_idx": 1,
+      "to_idx": 2,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-09"
+    },
+    {
+      "at": "2026-09-17T14:50:46",
+      "from_idx": 2,
+      "to_idx": 3,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-09"
+    },
+    {
+      "at": "2026-09-17T14:50:46",
+      "from_idx": 3,
+      "to_idx": 4,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-09"
+    },
+    {
+      "at": "2026-09-17T14:50:46",
+      "from_idx": 4,
+      "to_idx": 5,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-09"
+    },
+    {
+      "at": "2026-09-17T16:13:11",
+      "from_idx": 5,
+      "to_idx": 6,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-12"
+    },
+    {
+      "at": "2026-09-17T16:13:24",
+      "from_idx": 0,
+      "to_idx": 1,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-12"
+    },
+    {
+      "at": "2026-09-17T16:13:24",
+      "from_idx": 1,
+      "to_idx": 2,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-12"
+    },
+    {
+      "at": "2026-09-17T16:13:24",
+      "from_idx": 2,
+      "to_idx": 3,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-12"
+    },
+    {
+      "at": "2026-09-17T16:13:24",
+      "from_idx": 3,
+      "to_idx": 4,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-12"
+    },
+    {
+      "at": "2026-09-17T16:13:24",
+      "from_idx": 4,
+      "to_idx": 5,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-12"
+    },
+    {
+      "at": "2026-09-17T16:13:24",
+      "from_idx": 5,
+      "to_idx": 6,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2022-12"
+    },
+    {
+      "at": "2026-09-17T16:39:26",
+      "from_idx": 0,
+      "to_idx": 1,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2023-01"
+    },
+    {
+      "at": "2026-09-17T16:39:26",
+      "from_idx": 1,
+      "to_idx": 2,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2023-01"
+    },
+    {
+      "at": "2026-09-17T16:39:49",
+      "from_idx": 2,
+      "to_idx": 3,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2023-01"
+    },
+    {
+      "at": "2026-09-17T16:39:49",
+      "from_idx": 3,
+      "to_idx": 4,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2023-01"
+    },
+    {
+      "at": "2026-09-17T16:39:50",
+      "from_idx": 4,
+      "to_idx": 5,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2023-01"
+    },
+    {
+      "at": "2026-09-17T16:39:50",
+      "from_idx": 5,
+      "to_idx": 6,
+      "code": "22",
+      "msg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR",
+      "context": "getCntrctInfoListThngDetail/2023-01"
     }
   ]
 }
